@@ -18,6 +18,7 @@ class Client(models.Model):
 
 class Job_Detail(models.Model):
      Job_title = models.CharField(max_length=100)
+     Job_desc = models.TextField()
      Job_Date=models.DateTimeField(default=timezone.now)
      Job_Budget=models.FloatField()
      Job_Created=models.ForeignKey(to='Client', on_delete=models.CASCADE)
