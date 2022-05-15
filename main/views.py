@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render , redirect
 from django.http import HttpResponse
 from .models import Job_Detail, Freelancer, Job_Bid, Job_Awarded ,Client
 
@@ -48,7 +48,7 @@ def register(request):
 
             print("Registration completed")
 
-            return render(request, 'main/jobsFeeds.html') 
+            return redirect(jobsFeed) 
 
     return render(request, 'freelancer/FreelancerReg.html')
 
@@ -67,6 +67,6 @@ def clientregister(request):
 
             print("Registration completed")
 
-            return render(request, 'main/jobsFeeds.html') 
+            return  redirect(jobsFeed) 
 
     return render(request, 'client/clientReg.html')
