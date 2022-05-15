@@ -6,5 +6,5 @@ urlpatterns = [
     path('jobs/', views.jobsFeed, name='jobsFeed'),
     path('jobs/<id>', views.jobDetails, name='jobsFeed'),
     path('bid/<freelancerId>/<jobId>', views.bid, name='bid'),
-    path('register/', views.register, name='register'),
+    path('freelancer/reg/', views.register, name='register'),
 ]
