@@ -4,17 +4,17 @@ from django.contrib.auth.models import User
 
 
 class Freelancer(models.Model):
-     Name = models.CharField(max_length=100)
-     Email = models.CharField(max_length=100)
+     name = models.CharField(max_length=100)
+     email = models.CharField(max_length=100)
      password = models.CharField(max_length=32)
-     Balance=models.FloatField()
-     Skills=models.CharField(max_length=100)
+     balance=models.FloatField()
+     skills=models.CharField(max_length=100)
 
 class Client(models.Model):
-     Name = models.CharField(max_length=100)
-     Email = models.CharField(max_length=100)
+     name = models.CharField(max_length=100)
+     email = models.CharField(max_length=100)
      password = models.CharField(max_length=32)
-     Balance=models.FloatField()
+     balance=models.FloatField()
 
 class Job_Detail(models.Model):
      Job_title = models.CharField(max_length=100)

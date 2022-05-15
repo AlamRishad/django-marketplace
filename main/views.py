@@ -1,6 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render , redirect
 from django.http import HttpResponse
-from .models import Job_Detail, Freelancer, Job_Bid, Job_Awarded
+from .models import Job_Detail, Freelancer, Job_Bid, Job_Awarded ,Client
 
 
 
@@ -32,3 +32,41 @@ def bid(request, freelancerId, jobId):
 
     return render(request, 'main/bid.html', {'data': data})
 
+
+def register(request):
+
+    if request.method == 'POST':
+
+        if request.POST.get('name') and request.POST.get('email') and request.POST.get('password') and request.POST.get('skills') :
+            name = request.POST.get('name')
+            email = request.POST.get('email')
+            password = request.POST.get('password')
+         
+            skills = request.POST.get('skills')
+            post=Freelancer.objects.create(name=name, email=email, password=password, balance=0, skills=skills)      
+            post.save()
+
+            print("Registration completed")
+
+            return redirect(jobsFeed) 
+
+    return render(request, 'freelancer/FreelancerReg.html')
+
+
+def clientregister(request):
+
+    if request.method == 'POST':
+
+        if request.POST.get('name') and request.POST.get('email') and request.POST.get('password')  :
+            name = request.POST.get('name')
+            email = request.POST.get('email')
+            password = request.POST.get('password')
+         
+            post=Client.objects.create(name=name, email=email, password=password, balance=0)      
+            post.save()
+
+            print("Registration completed")
+
+            return  redirect(jobsFeed) 
+
+    return render(request, 'client/clientReg.html')
