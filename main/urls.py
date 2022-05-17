@@ -6,6 +6,8 @@ urlpatterns = [
     path('jobs/', views.jobsFeed, name='jobsFeed'),
     path('jobs/<id>', views.jobDetails, name='jobsFeed'),
     path('bid/<freelancerId>/<jobId>', views.bid, name='bid'),
-    path('freelancer/reg/', views.register, name='register'),
-    path('client/reg/', views.clientregister, name='clientregister'),
+    path('reg/freelancer', views.freelancerRegister, name='freelancerRegister'),
+    path('reg/client', views.clientRegister, name='clientRegister'),
+    path('login/client/', views.clientLogin, name='clientLogin'),
+    path('logout/', views.logoutUser, name='clientLogin'),
 ]
