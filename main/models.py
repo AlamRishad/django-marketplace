@@ -26,7 +26,6 @@ class Job_Detail(models.Model):
 
 class Job_Bid(models.Model):
       freelancer_iD=models.ForeignKey(to='Freelancer', on_delete=models.CASCADE)
-      client_iD=models.ForeignKey(to='Client', on_delete=models.CASCADE)
       proposal_message=models.CharField(max_length=1000)
       proposed_amount=models.FloatField()
       job_id= models.ForeignKey(to='Job_Detail', on_delete=models.CASCADE)

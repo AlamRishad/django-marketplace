@@ -25,18 +25,40 @@ def jobDetails(request, id):
 
     return render(request, 'public/jobDetails.html', { 'job': jobs } )
 
-def bid(request, freelancerId, jobId):
-    freelancer = Freelancer.objects.get( id = freelancerId)
+def bid(request, jobId):
+    
     job = Job_Detail.objects.get(id = jobId)
+    current_user = request.user
+    
+    freelancer = Freelancer.objects.all()
 
+    print (current_user.email);
+    
+    free_id = None;
+
+    for x in freelancer:
+        if(current_user.username==x.email):
+            free_id = x.id;
+            break;
+    
+    print (free_id);
+
+    if request.method == 'POST':
+        if request.POST.get('proposed_message') and request.POST.get('proposed_amount') :
+            proposed_message = request.POST.get('proposed_message')
+            proposed_amount = request.POST.get('proposed_amount')
+            bid = Job_Bid.objects.create(freelancer_iD_id=free_id,proposal_message=proposed_message,proposed_amount=proposed_amount,job_id=jobId)
+            bid.save()
+            print("Bid completed")
+            return render(request, 'public/bid.html')
     data = {
         'job' : job,
-        'freelancer' : freelancer
+        # 'freelancer' : freelancer
     }
-    print("fre: "+freelancerId)
+    # print("fre: "+freelancerId)
     print("job: "+jobId)
 
-    return render(request, 'public/bid.html', {'data': data})
+    return render(request, 'public/bid.html')
 
 
 def freelancerRegister(request):
@@ -56,7 +78,7 @@ def freelancerRegister(request):
 
             print("Registration completed")
 
-            return redirect(jobsFeed) 
+            return redirect(freelancerLogin) 
     return render(request, 'freelancer/FreelancerReg.html')
 
 
