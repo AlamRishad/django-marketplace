@@ -2,7 +2,7 @@ from ast import Return
 from tkinter.messagebox import NO
 from django.shortcuts import render , redirect
 from django.http import HttpResponse
-from .models import Job_Detail, Freelancer, Job_Bid, Job_Awarded ,Client
+from .models import Job_Detail, Freelancer, Job_Bid, Job_Awarded, Job_Bid
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 
@@ -20,9 +20,13 @@ def jobsFeed(request):
 
 def jobDetails(request, id):
     jobs = Job_Detail.objects.get(id = id)
-
     session_email = request.user.email
     freelancer = Freelancer.objects.all()
+    biddingData = Job_Bid.objects.filter(job_id_id = id)
+
+  
+
+ 
 
     free_id = None
     for x in freelancer:
@@ -30,9 +34,11 @@ def jobDetails(request, id):
             free_id = x.id;
             break;
 
+    isBidded = Job_Bid.objects.filter(freelancer_id_id = free_id ) is not None if True else False
+
     is_freelancer = free_id is not None if True else False
 
-    return render(request, 'public/jobDetails.html', { 'job': jobs, "is_freelancer": is_freelancer } )
+    return render(request, 'public/jobDetails.html', { 'job': jobs, "is_freelancer": is_freelancer, "biddingData": biddingData, "isBidded": isBidded } )
 
 def bid(request, jobId):
     job = Job_Detail.objects.get(id = jobId)
