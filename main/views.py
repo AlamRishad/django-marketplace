@@ -1,72 +1,163 @@
+from ast import Return
+from tkinter.messagebox import NO
 from django.shortcuts import render , redirect
 from django.http import HttpResponse
 from .models import Job_Detail, Freelancer, Job_Bid, Job_Awarded ,Client
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
+
+
 
 
 
 def index(request):
     
-    return render(request, 'main/index.html')
+    return render(request, 'public/test.html')
 
 def jobsFeed(request):
-
     jobs = Job_Detail.objects.all()
-    
-    return render(request, 'main/jobsFeeds.html', { "jobsList" : jobs })
+    return render(request, 'public/jobsFeeds.html', { "jobsList" : jobs })
 
 def jobDetails(request, id):
-    jobs = Job_Detail.objects.get( id = id)
+    jobs = Job_Detail.objects.get(id = id)
 
-    return render(request, 'main/jobDetails.html', { 'job': jobs } )
+    session_email = request.user.email
+    freelancer = Freelancer.objects.all()
 
-def bid(request, freelancerId, jobId):
-    freelancer = Freelancer.objects.get( id = freelancerId)
+    free_id = None
+    for x in freelancer:
+        if(session_email== x.email):
+            free_id = x.id;
+            break;
+
+    is_freelancer = free_id is not None if True else False
+
+    return render(request, 'public/jobDetails.html', { 'job': jobs, "is_freelancer": is_freelancer } )
+
+def bid(request, jobId):
     job = Job_Detail.objects.get(id = jobId)
 
-    data = {
-        'job' : job,
-        'freelancer' : freelancer
-    }
-    print("fre: "+freelancerId)
-    print("job: "+jobId)
+    session_email = request.user.email
+    
+    freelancer = Freelancer.objects.all()
 
-    return render(request, 'main/bid.html', {'data': data})
+    free_id = None
+    for x in freelancer:
+        if(session_email== x.email):
+            free_id = x.id;
+            break;
 
+    is_freelancer = free_id is not None if True else False
 
-def register(request):
+    if not is_freelancer:
+        return render(request, 'freelancer/freelancerLogin.html')
+        
+    print (free_id);
 
     if request.method == 'POST':
+        if request.POST.get('proposed_message') and request.POST.get('proposed_amount') :
+            proposed_message = request.POST.get('proposed_message')
+            proposed_amount = request.POST.get('proposed_amount')
+            bid = Job_Bid.objects.create(freelancer_id_id = free_id, proposal_message=proposed_message,proposed_amount=proposed_amount, job_id_id = jobId)
+            bid.save()
+            print("Bid completed")
 
+    print("job: "+jobId)
+
+    return render(request, 'public/bid.html')
+
+
+def freelancerRegister(request):
+    if request.method == 'GET':
+        return render(request, 'client/FreelancerReg.html')
+
+    elif request.method == 'POST':
         if request.POST.get('name') and request.POST.get('email') and request.POST.get('password') and request.POST.get('skills') :
             name = request.POST.get('name')
             email = request.POST.get('email')
             password = request.POST.get('password')
-         
             skills = request.POST.get('skills')
-            post=Freelancer.objects.create(name=name, email=email, password=password, balance=0, skills=skills)      
+
+            user = User.objects.create_user(email, email, password)
+            user.save()
+         
+            post = Freelancer.objects.create(name=name, email=email, password=password, balance=0, skills=skills)      
             post.save()
 
             print("Registration completed")
 
-            return redirect(jobsFeed) 
-
+            return redirect(freelancerLogin) 
     return render(request, 'freelancer/FreelancerReg.html')
 
 
-def clientregister(request):
+def clientRegister(request):
+    if request.method == 'GET':
+        return render(request, 'client/clientReg.html')
 
-    if request.method == 'POST':
-
+    elif request.method == 'POST':
         if request.POST.get('name') and request.POST.get('email') and request.POST.get('password')  :
             name = request.POST.get('name')
             email = request.POST.get('email')
             password = request.POST.get('password')
-         
-            post=Client.objects.create(name=name, email=email, password=password, balance=0)      
-            post.save()
+
+            user = User.objects.create_user(email, email, password)
+            user.save()
+
+            client = Client.objects.create(name = name, email = email, password = password, balance = 0)
+            client.save() 
 
             print("Registration completed")
 
-            return  redirect(jobsFeed) 
-
+            return  redirect(clientLogin) 
     return render(request, 'client/clientReg.html')
+
+def clientLogin(request):
+
+    if request.method == 'GET':
+        return render(request, 'client/clientLogin.html')
+
+    elif request.method == 'POST':
+        if request.POST.get('email') and request.POST.get('password') :
+            email = request.POST.get('email')
+            password = request.POST.get('password')
+            print(email, password)
+            user = authenticate(request, username = email, password = password)
+
+            if user is not None:
+                login(request, user)
+                print("Logged in")
+                return redirect(jobsFeed)
+                # Redirect to a success page.
+                ...
+            else:
+                print("Ah Snap!")
+                # Return an 'invalid login' error message.           
+                return render(request, 'client/clientLogin.html')
+           
+def freelancerLogin(request):
+
+    if request.method == 'GET':
+        return render(request, 'freelancer/freelancerLogin.html')
+
+    if request.method == 'POST':
+        if request.POST.get('email') and request.POST.get('password') :
+            email = request.POST.get('email')
+            password = request.POST.get('password')
+            print(email, password)
+            user = authenticate(request, username = email, password = password)
+
+            if user is not None:
+                login(request, user)
+                print("Logged in")
+                return redirect(jobsFeed)
+                # Redirect to a success page.
+                ...
+            else:
+                print("Ah Snap!")
+                # Return an 'invalid login' error message.           
+                return render(request, 'freelancer/freelancerLogin.html')            
+
+
+def logoutUser(request):
+    logout(request)
+    return redirect(clientLogin) 

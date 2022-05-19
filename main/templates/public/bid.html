@@ -1,0 +1,13 @@
+{% extends 'components/base.html' %}
+
+{% block container %}
+        <div class=" px-[250px] py-[20px]  " >
+            <form action="" method="POST">{% csrf_token %}
+
+                Proposal Message <input type="text" name="proposed_message"/><br/>
+                Proposed Amount <input type="text" name="proposed_amount"/><br/>
+                <br/>
+                <input type="submit" value="Bid">
+            </form>
+        </div>
+{% endblock %}

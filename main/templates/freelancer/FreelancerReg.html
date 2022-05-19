@@ -4,16 +4,15 @@
 </head>
 
 <body>
-    
-<form action="" method="POST">{% csrf_token %}
+    <form action="" method="POST">{% csrf_token %}
 
-    
-Name: <input type="text" name="name"/><br/>
-Email: <input type="text" name="email"/><br/>
-Password: <input type="text" name="password"/><br/>
-Skills: <input type="text" name="skills"/><br/>
-<br/>
-<input type="submit" value="Post"/>
+    Name: <input type="text" name="name"/><br/>
+    Email: <input type="email" name="email"/><br/>
+    Password: <input type="password" name="password"/><br/>
+    Skills: <input type="text" name="skills"/><br/>
+    <br/>
+    <input type="submit" value="Register">
+
 </form>
 </body>
 
