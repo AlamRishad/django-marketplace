@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
 
+
 urlpatterns = [
     path('', views.index, name='index'),
     path('jobs/', views.jobsFeed, name='jobsFeed'),
@@ -9,5 +10,7 @@ urlpatterns = [
     path('reg/freelancer', views.freelancerRegister, name='freelancerRegister'),
     path('reg/client', views.clientRegister, name='clientRegister'),
     path('login/client/', views.clientLogin, name='clientLogin'),
+    path('login/freelancer/', views.freelancerLogin, name='freelancerLogin'),
     path('logout/', views.logoutUser, name='clientLogin'),
 ]
+

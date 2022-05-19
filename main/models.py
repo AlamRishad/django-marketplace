@@ -39,7 +39,7 @@ class Job_Awarded(models.Model):
      bidding_id=models.ForeignKey(to='Job_Bid', on_delete=models.CASCADE)
      
 
-# class Transection(models.Model):
+# class Transaction(models.Model):
 #      Amount = models.FloatField()
 #      Job=models.ForeignKey(to='Job_Detail', on_delete=models.CASCADE)
 #      Freelancer=models.ForeignKey(to='Freelancer', on_delete=models.CASCADE)

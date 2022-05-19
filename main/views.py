@@ -9,7 +9,7 @@ from django.contrib.auth import authenticate, login, logout
 
 def index(request):
     
-    return render(request, 'main/index.html')
+    return render(request, 'public/test.html')
 
 def jobsFeed(request):
 
@@ -18,12 +18,12 @@ def jobsFeed(request):
 
     jobs = Job_Detail.objects.all()
     
-    return render(request, 'main/jobsFeeds.html', { "jobsList" : jobs, "username": username })
+    return render(request, 'public/jobsFeeds.html', { "jobsList" : jobs, "username": username })
 
 def jobDetails(request, id):
     jobs = Job_Detail.objects.get( id = id)
 
-    return render(request, 'main/jobDetails.html', { 'job': jobs } )
+    return render(request, 'public/jobDetails.html', { 'job': jobs } )
 
 def bid(request, freelancerId, jobId):
     freelancer = Freelancer.objects.get( id = freelancerId)
@@ -36,7 +36,7 @@ def bid(request, freelancerId, jobId):
     print("fre: "+freelancerId)
     print("job: "+jobId)
 
-    return render(request, 'main/bid.html', {'data': data})
+    return render(request, 'public/bid.html', {'data': data})
 
 
 def freelancerRegister(request):
@@ -75,14 +75,16 @@ def clientRegister(request):
 
             print("Registration completed")
 
-            return  redirect(jobsFeed) 
+            return  redirect(clientLogin) 
     return render(request, 'client/clientReg.html')
 
 def clientLogin(request):
 
+    if request.method == 'GET':
+        return render(request, 'client/clientLogin.html')
+
     if request.method == 'POST':
         if request.POST.get('email') and request.POST.get('password') :
-
             email = request.POST.get('email')
             password = request.POST.get('password')
             print(email, password)
@@ -97,9 +99,30 @@ def clientLogin(request):
             else:
                 print("Ah Snap!")
                 # Return an 'invalid login' error message.           
-                return render(request, 'client/clientReg.html')
-            
-    return render(request, 'client/clientLogin.html')
+                return render(request, 'client/clientLogin.html')
+           
+def freelancerLogin(request):
+
+    if request.method == 'GET':
+        return render(request, 'freelancer/freelancerLogin.html')
+
+    if request.method == 'POST':
+        if request.POST.get('email') and request.POST.get('password') :
+            email = request.POST.get('email')
+            password = request.POST.get('password')
+            print(email, password)
+            user = authenticate(request, username = email, password = password)
+
+            if user is not None:
+                login(request, user)
+                print("Logged in")
+                return redirect(jobsFeed)
+                # Redirect to a success page.
+                ...
+            else:
+                print("Ah Snap!")
+                # Return an 'invalid login' error message.           
+                return render(request, 'freelancer/freelancerLogin.html')            
 
 
 def logoutUser(request):
