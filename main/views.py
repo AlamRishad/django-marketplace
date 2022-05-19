@@ -2,7 +2,7 @@ from ast import Return
 from tkinter.messagebox import NO
 from django.shortcuts import render , redirect
 from django.http import HttpResponse
-from .models import Job_Detail, Freelancer, Job_Bid, Job_Awarded, Job_Bid
+from .models import Job_Detail, Freelancer, Job_Bid, Job_Awarded, Job_Bid, Client
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 
@@ -188,6 +188,8 @@ def jobCreate(request):
             Job_Budget=request.POST.get('job_budget')
             job_details = Job_Detail.objects.create(Job_title=Job_title ,Job_desc = Job_desc ,Job_Budget=Job_Budget ,Job_Created_id = client_id  , Job_Awarded = awarded );
             job_details.save()
-            return  redirect(jobsFeed) 
+            return  redirect(jobsFeed)
+
+    return render(request, 'client/clientJobCreate.htm')
 
      
