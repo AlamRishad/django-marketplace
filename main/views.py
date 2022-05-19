@@ -47,7 +47,7 @@ def bid(request, jobId):
         if request.POST.get('proposed_message') and request.POST.get('proposed_amount') :
             proposed_message = request.POST.get('proposed_message')
             proposed_amount = request.POST.get('proposed_amount')
-            bid = Job_Bid.objects.create(freelancer_iD_id=free_id,proposal_message=proposed_message,proposed_amount=proposed_amount,job_id=jobId)
+            bid = Job_Bid.objects.create(freelancer_iD=free_id,proposal_message=proposed_message,proposed_amount=proposed_amount,job_id=jobId)
             bid.save()
             print("Bid completed")
             return render(request, 'public/bid.html')
