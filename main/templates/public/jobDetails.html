@@ -8,13 +8,31 @@
             <p class=" text-[20px] text-textSecondary mt-[10px] " >Budget: {{ job.Job_Budget }} BDT</p>
             <h6 class=" text-[16px] text-textSecondary " >{{ job.Job_Date }}</h6>
             <p class=" text-[20px] text-textSecondary mt-[10px] " >{{ job.Job_desc }}</p>
+
+            {% if not isBidded %}
+            <div class="bg-green-600 p-2 mt-2 inline-block rounded-md ">
+                <a href="bid/{{ job.id }}">
+                    <button>Bid now</button>
+                </a>
+            </div>
+            {% endif %}
+
         </div>
         
-        {% if is_freelancer %}
-            <a href="bid/{{ job.id }}">
-                <button>Bid now</button>
-            </a>
-        {% endif %} 
+        
+        <div>
+            <p>Total bids: {{biddingData.count}}</p>
+
+            <div>
+                {%  for bid in biddingData %}
+                <div class=" border-2 p-2 m-2  ">
+                    <h1>Freelancer name: {{bid.freelancer_id.name }} </h1>
+                    <h6>Freelancer email: {{bid.freelancer_id.email }} </h6>
+                    <h6>Bid: {{bid.proposed_amount }} </h6>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
     </div>
 {% endblock %}
 
