@@ -1,0 +1,18 @@
+{% extends 'components/base.html' %}
+
+{% block container %}
+    <div class=" px-[250px] py-[20px]  " >
+
+        <div class=" rounded-2xl bg-gradient-to-r from-slate-100 to-purple-50 px-[20px] py-[20px] mb-[20px] " >
+            <h1 class=" text-[32px] text-textPrimary ">{{ job.Job_title }}</h1>
+            <p class=" text-[20px] text-textSecondary mt-[10px] " >Budget: {{ job.Job_Budget }} BDT</p>
+            <h6 class=" text-[16px] text-textSecondary " >{{ job.Job_Date }}</h6>
+            <p class=" text-[20px] text-textSecondary mt-[10px] " >{{ job.Job_desc }}</p>
+        </div>
+
+        <a href="bid/user-id/job-id">
+            <button>Bid now</button>
+        </a>
+    </div>
+{% endblock %}
+
