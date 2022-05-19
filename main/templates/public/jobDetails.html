@@ -9,10 +9,12 @@
             <h6 class=" text-[16px] text-textSecondary " >{{ job.Job_Date }}</h6>
             <p class=" text-[20px] text-textSecondary mt-[10px] " >{{ job.Job_desc }}</p>
         </div>
-
-        <a href="bid/{{ job.id }}">
-            <button>Bid now</button>
-        </a>
+        
+        {% if is_freelancer %}
+            <a href="bid/{{ job.id }}">
+                <button>Bid now</button>
+            </a>
+        {% endif %} 
     </div>
 {% endblock %}
 
