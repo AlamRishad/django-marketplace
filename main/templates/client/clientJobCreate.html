@@ -1,0 +1,15 @@
+{% extends 'components/base.html' %}
+
+{% block container %}
+        <div class=" px-[250px] py-[20px]  " >
+            <form action="" method="POST">{% csrf_token %}
+
+                Job Title <input type="text" name="job_title"/><br/>
+                Job Description <input type="text" name="job_desc"/><br/>
+                Job Budget <input type="text" name="job_budget"/><br/>
+                <br/>
+                <input type="submit" value="Add Job">
+                
+            </form>
+        </div>
+{% endblock %}

@@ -4,6 +4,7 @@ from .models import Client
 from .models import Job_Detail
 from .models import Job_Bid
 from .models import Job_Awarded
+from .models import Blog
 
 
 admin.site.register(Freelancer)
@@ -11,5 +12,5 @@ admin.site.register(Client)
 admin.site.register(Job_Detail)
 admin.site.register(Job_Bid)
 admin.site.register(Job_Awarded)
-
+admin.site.register(Blog)
 # Register your models here.

@@ -2,7 +2,8 @@ from ast import Return
 from tkinter.messagebox import NO
 from django.shortcuts import render , redirect
 from django.http import HttpResponse
-from .models import Job_Detail, Freelancer, Job_Bid, Job_Awarded, Job_Bid
+from .models import Job_Detail, Freelancer, Job_Bid, Job_Awarded, Job_Bid, Client , Blog
+
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 
@@ -23,11 +24,6 @@ def jobDetails(request, id):
     session_email = request.user.email
     freelancer = Freelancer.objects.all()
     biddingData = Job_Bid.objects.filter(job_id_id = id)
-
-  
-
- 
-
     free_id = None
     for x in freelancer:
         if(session_email== x.email):
@@ -56,8 +52,8 @@ def bid(request, jobId):
     is_freelancer = free_id is not None if True else False
 
     if not is_freelancer:
-        return render(request, 'freelancer/freelancerLogin.html')
-        
+        return render(request, 'freelancer/freelancerLogin.html')    
+   
     print (free_id);
 
     if request.method == 'POST':
@@ -75,7 +71,7 @@ def bid(request, jobId):
 
 def freelancerRegister(request):
     if request.method == 'GET':
-        return render(request, 'client/FreelancerReg.html')
+        return render(request, 'freelancer/FreelancerReg.html')
 
     elif request.method == 'POST':
         if request.POST.get('name') and request.POST.get('email') and request.POST.get('password') and request.POST.get('skills') :
@@ -113,7 +109,6 @@ def clientRegister(request):
             client.save() 
 
             print("Registration completed")
-
             return  redirect(clientLogin) 
     return render(request, 'client/clientReg.html')
 
@@ -167,3 +162,53 @@ def freelancerLogin(request):
 def logoutUser(request):
     logout(request)
     return redirect(clientLogin) 
+
+def jobCreate(request):
+    session_email = request.user.email
+    client = Client.objects.all()
+
+    client_id = None
+    for x in client:
+        if(session_email== x.email):
+            client_id = x.id;
+            break;
+
+    awarded = False;
+    if request.method == 'GET':
+        return render(request, 'client/clientJobCreate.html')
+
+    if request.method == 'POST':
+        if request.POST.get('job_title') and request.POST.get('job_desc') and request.POST.get('job_budget'):
+            Job_title = request.POST.get('job_title')
+            Job_desc = request.POST.get('job_desc')
+            Job_Budget=request.POST.get('job_budget')
+            job_details = Job_Detail.objects.create(Job_title=Job_title ,Job_desc = Job_desc ,Job_Budget=Job_Budget ,Job_Created_id = client_id  , Job_Awarded = awarded );
+            job_details.save()
+            return  redirect(jobsFeed)
+
+    return render(request, 'client/clientJobCreate.htm')
+
+     
+def blogCreate(request,user):
+    session_name = request.user.username
+    print(session_name);
+    client = Client.objects.all()
+    if request.method == 'GET':
+        return render(request, 'Blog/CreateBlog.html')
+
+    if request.method == 'POST':
+        if request.POST.get('blog_title') and request.POST.get('blog_desc') :
+            blog_title = request.POST.get('blog_title')
+            blog_desc = request.POST.get('blog_desc')
+           
+            blog_details = Blog.objects.create(blog_title=blog_title ,blog_desc = blog_desc ,blog_writer=session_name );
+            blog_details.save()
+            return  redirect(blogDetail)
+
+    return render(request, 'Blog/createBlog.html')
+
+def blogDetail(request):
+    blogs = Blog.objects.all()
+    session_id = request.user.id
+    return render(request, 'Blog/showBlog.html', { "blogList" : blogs ,"user" : session_id})
+    
