@@ -13,5 +13,7 @@ urlpatterns = [
     path('login/client/', views.clientLogin, name='clientLogin'),
     path('login/freelancer/', views.freelancerLogin, name='freelancerLogin'),
     path('logout/', views.logoutUser, name='clientLogin'),
+    path('job/blogDetail/blogCreate/<user>', views.blogCreate, name='blogCreate'),
+    path('job/blogDetail/', views.blogDetail, name='blogDetail'),
 ]
 

@@ -1,0 +1,27 @@
+{% extends 'components/base.html' %}
+
+{% block container %}
+        {% comment %} Search {% endcomment %}
+        {% include 'components/searchBar.html' %}
+        <div class="bg-green-600 p-2 mt-2 inline-block rounded-md ">
+            <a href="blogCreate/{{user}}">
+                <button>Add Blog</button>
+            </a>
+        </div>
+        <div class=" px-[250px] py-[20px]  " >
+            {% for blog in blogList %}
+                <div class=" rounded-2xl bg-gradient-to-r from-slate-100 to-purple-50 px-[20px] py-[20px] mb-[20px] " >
+                    <h1 class=" text-[32px] text-textPrimary ">{{ blog.blog_title }}</h1>
+                    <p class=" text-[20px] text-textSecondary mt-[10px] " >{{ blog.blog_writer }}</p>
+                    <h6 class=" text-[16px] text-textSecondary " >{{ blog.blog_date }}</h6>
+                    <p class=" text-[20px] text-textSecondary mt-[10px] " >{{ blog.blog_desc|truncatechars:150}}</p>
+                  </div>
+            {% endfor %}
+        </div>
+{% endblock %}
+
+
+
+    
+
+    

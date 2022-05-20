@@ -37,6 +37,11 @@ class Job_Awarded(models.Model):
      freelance_id=models.ForeignKey(to='Freelancer', on_delete=models.CASCADE)
      bidding_id=models.ForeignKey(to='Job_Bid', on_delete=models.CASCADE)
      
+class Blog(models.Model):
+     blog_title= models.CharField(max_length=100)
+     blog_date=models.DateTimeField(default=timezone.now)
+     blog_desc = models.TextField()
+     blog_writer=models.CharField(max_length=100)
 
 # class Transaction(models.Model):
 #      Amount = models.FloatField()
