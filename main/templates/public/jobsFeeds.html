@@ -5,15 +5,17 @@
         {% include 'components/searchBar.html' %}
 
         <div class=" px-[250px] py-[20px]  " >
-            {% for job in jobsList %}
-                <div class=" rounded-2xl bg-gradient-to-r from-slate-100 to-purple-50 px-[20px] py-[20px] mb-[20px] " >
-                    <h1 class=" text-[32px] text-textPrimary ">{{ job.Job_title }}</h1>
-                    <p class=" text-[20px] text-textSecondary mt-[10px] " >Budget: {{ job.Job_Budget }} BDT</p>
-                    <h6 class=" text-[16px] text-textSecondary " >{{ job.Job_Date }}</h6>
-                    <p class=" text-[20px] text-textSecondary mt-[10px] " >{{ job.Job_desc|truncatechars:150}}</p>
-                    <p class=" text-[20px] text-textSecondary mt-[10px] text-purple-400 " > <a href="/jobs/{{ job.id }}"> More ...</a> </p>
-                </div>
-            {% endfor %}
+            <div>
+                {% for job in jobsList %}
+                    <div class=" rounded-2xl bg-gradient-to-r from-slate-100 to-purple-50 px-[20px] py-[20px] mb-[20px] " >
+                        <h1 class=" text-[25px] font-medium text-textPrimary ">{{ job.Job_title }}</h1>
+                        <p class=" text-[18px] text-textSecondary mt-[10px] " >Budget: {{ job.Job_Budget }} BDT</p>
+                        <h6 class=" text-[14px] text-textSecondary " >{{ job.Job_Date }}</h6>
+                        <p class=" text-[15px] text-textSecondary mt-[10px] " >{{ job.Job_desc|truncatechars:150}}</p>
+                        <p class=" text-[18px] font-bold text-textSecondary mt-[10px] text-purple-400 " > <a href="/jobs/{{ job.id }}"> More ...</a> </p>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
 {% endblock %}
 
