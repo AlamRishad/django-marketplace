@@ -4,13 +4,13 @@
     <div class=" px-[250px] py-[20px]  " >
 
         <div class=" rounded-2xl bg-gradient-to-r from-slate-100 to-purple-50 px-[20px] py-[20px] mb-[20px] " >
-            <h1 class=" text-[32px] text-textPrimary ">{{ job.Job_title }}</h1>
-            <p class=" text-[20px] text-textSecondary mt-[10px] " >Budget: {{ job.Job_Budget }} BDT</p>
-            <h6 class=" text-[16px] text-textSecondary " >{{ job.Job_Date }}</h6>
-            <p class=" text-[20px] text-textSecondary mt-[10px] " >{{ job.Job_desc }}</p>
+            <h1 class=" text-[25px] font-medium text-textPrimary ">{{ job.Job_title }}</h1>
+            <p class=" text-[18px] text-textSecondary mt-[10px] " >Budget: {{ job.Job_Budget }} BDT</p>
+            <h6 class=" text-[14px] text-textSecondary " >{{ job.Job_Date }}</h6>
+            <p class=" text-[15px] text-textSecondary mt-[10px] " >{{ job.Job_desc }}</p>
 
             {% if not isBidded %}
-            <div class="bg-green-600 p-2 mt-2 inline-block rounded-md ">
+            <div class="bg-secondary p-2 mt-2 text-[10px] font-medium text-white inline-block rounded-md ">
                 <a href="bid/{{ job.id }}">
                     <button>Bid now</button>
                 </a>
@@ -21,17 +21,18 @@
         
         
         <div>
-            <p>Total bids: {{biddingData.count}}</p>
+            <div class="bg-slate-100 p-[5px] mb-[5px]" >
+                <h6 class=" text-[15px] font-medium ">Total bids: {{biddingData.count}}</h6>
+            </div>
 
-            <div>
+
                 {%  for bid in biddingData %}
-                <div class=" border-2 p-2 m-2  ">
-                    <h1>Freelancer name: {{bid.freelancer_id.name }} </h1>
-                    <h6>Freelancer email: {{bid.freelancer_id.email }} </h6>
-                    <h6>Bid: {{bid.proposed_amount }} </h6>
+                <div class=" bg-slate-200 p-[5px] rounded-md ">
+                    <h6 class="text-[14px] font-medium">Bidded by: {{bid.freelancer_id.name }} </h6>
+                    <p class="text-[12px]" >Bid: {{bid.proposed_amount }} </p>
                 </div>
                 {% endfor %}
-            </div>
+
         </div>
     </div>
 {% endblock %}
