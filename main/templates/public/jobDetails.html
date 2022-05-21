@@ -9,7 +9,7 @@
             <h6 class=" text-[14px] text-textSecondary " >{{ job.Job_Date }}</h6>
             <p class=" text-[15px] text-textSecondary mt-[10px] " >{{ job.Job_desc }}</p>
 
-            {% if not isBidded %}
+            {% if isBidded %}
             <div class="bg-secondary p-2 mt-2 text-[10px] font-medium text-white inline-block rounded-md ">
                 <a href="bid/{{ job.id }}">
                     <button>Bid now</button>

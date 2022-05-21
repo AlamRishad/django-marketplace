@@ -15,7 +15,8 @@
                     <p class=" text-[20px] text-textSecondary mt-[10px] " >{{ blog.blog_writer }}</p>
                     <h6 class=" text-[16px] text-textSecondary " >{{ blog.blog_date }}</h6>
                     <p class=" text-[20px] text-textSecondary mt-[10px] " >{{ blog.blog_desc|truncatechars:150}}</p>
-                  </div>
+                    <p class=" text-[18px] font-bold text-textSecondary mt-[10px] text-purple-400 " > <a href="/blogs/{{ blog.id }}"> More ...</a> </p>  
+                </div>
             {% endfor %}
         </div>
 {% endblock %}
