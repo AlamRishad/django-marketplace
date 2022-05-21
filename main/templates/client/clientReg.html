@@ -1,17 +1,12 @@
-<html>
-<head>
-<title>Register</title>
-</head>
+{% extends 'components/base_min.html' %}
 
-<body>
-    
-    <form action="" method="POST">{% csrf_token %}
-        Name: <input type="text" name="name"/><br/>
-        Email: <input type="text" name="email"/><br/>
-        Password: <input type="text" name="password"/><br/>
-        <br/>
-        <input type="submit" value="Register"/>
+{% block container %}
+<div class="mx-auto max-w-[300px] pt-[300px] ">
+    <h1 class="text-primary font-medium text-[20px] text-center mb-[20px] " >Client Register</h1>
+    <form class="flex flex-col gap-[5px] p-[20px] bg-secondary rounded-md " action="" method="post" >{% csrf_token %}
+        <input class="p-[5px] rounded-md bg-gray-100" type="text" placeholder="email" name="email">
+        <input class="p-[5px] rounded-md bg-gray-100" type="password" placeholder="password" name="password">
+        <button class="p-[5px] rounded-md bg-gray-600 font-medium text-[18px] text-white " type="submit" >Login</button>
     </form>
-</body>
-
-</html>
+</div>
+{% endblock %}
