@@ -10,6 +10,7 @@
             <p class=" text-[15px] text-textSecondary mt-[10px] " >{{ job.Job_desc }}</p>
           
             {% if not isBidded and is_freelancer == True%}
+
             <div class="bg-secondary p-2 mt-2 text-[10px] font-medium text-white inline-block rounded-md ">
                 <a href="bid/{{ job.id }}">
                     <button>Bid now</button>

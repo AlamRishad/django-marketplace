@@ -3,7 +3,7 @@ from queue import Empty
 from tkinter.messagebox import NO
 from django.shortcuts import render , redirect
 from django.http import HttpResponse
-from .models import Job_Detail, Freelancer, Job_Bid, Job_Awarded, Job_Bid, Client , Blog
+from .models import Job_Detail, Freelancer, Job_Bid, Job_Awarded, Job_Bid, Client , Blog ,Blog_Comment
 
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
@@ -31,8 +31,10 @@ def jobDetails(request, id):
             free_id = x.id;
             break;
 
-    isBidded = Job_Bid.objects.filter(freelancer_id_id = free_id ).all().count() != 0 if True else False
-   
+
+    isBidded = Job_Bid.objects.filter(freelancer_id_id = free_id ).all().count() != 0 if False else True
+    print()
+
 
     is_freelancer = free_id is not None if True else False
 
@@ -209,8 +211,26 @@ def blogCreate(request,user):
 
     return render(request, 'Blog/createBlog.html')
 
-def blogDetail(request):
+def blogs(request):
     blogs = Blog.objects.all()
     session_id = request.user.id
-    return render(request, 'Blog/showBlog.html', { "blogList" : blogs ,"user" : session_id})
+    return render(request, 'Blog/blogs.html', { "blogList" : blogs ,"user" : session_id})
+
+
+def blogDetail(request,blogid):
+    blogs = Blog.objects.get(id = blogid)
+    print(blogs)
+    session_id = request.user.id
+    session_name = request.user.username
+    if request.method == 'POST':
+        print("Comment completed")
+        if request.POST.get('comment_desc'):
+            comment_desc = request.POST.get('comment_desc')
+            comment = Blog_Comment.objects.create(blog_comment_id = blogid, comment_writer=session_name,comment_desc=comment_desc)
+            comment.save()
+            print("Comment completed")
+    
+    commentData = Blog_Comment.objects.filter(blog_comment_id = blogid)     
+    return render(request, 'Blog/blogDetail.html', { "blog" : blogs ,"user" : session_id , "commentData":commentData })
+   
     
