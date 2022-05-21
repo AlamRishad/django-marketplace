@@ -31,8 +31,10 @@ def jobDetails(request, id):
             free_id = x.id;
             break;
 
+
     isBidded = Job_Bid.objects.filter(freelancer_id_id = free_id ).all().count() != 0 if False else True
     print()
+
 
     is_freelancer = free_id is not None if True else False
 
