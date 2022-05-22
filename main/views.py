@@ -8,7 +8,12 @@ from .models import Job_Detail, Freelancer, Job_Bid, Job_Awarded, Job_Bid, Clien
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 
-def index(request):
+
+def firstpage(request):
+    return render(request, 'public/firstpage.html')
+
+def home(request):
+
     return render(request, 'public/test.html')
 
 def jobsFeed(request):
@@ -69,7 +74,7 @@ def bid(request, jobId):
 
     print("job: "+jobId)
 
-    return render(request, 'public/bid.html')
+    return redirect(jobDetails)
 
 
 def freelancerRegister(request):
@@ -164,7 +169,7 @@ def freelancerLogin(request):
 
 def logoutUser(request):
     logout(request)
-    return redirect(clientLogin) 
+    return redirect(firstpage) 
 
 def jobCreate(request):
     session_email = request.user.email
