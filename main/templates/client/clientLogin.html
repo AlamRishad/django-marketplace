@@ -1,12 +1,16 @@
 {% extends 'components/base_min.html' %}
 
 {% block container %}
-<div class="mx-auto max-w-[300px] pt-[300px] ">
-    <h1 class="text-primary font-medium text-[20px] text-center mb-[20px] " >Client Login</h1>
-    <form class="flex flex-col gap-[5px] p-[20px] bg-secondary rounded-md " action="" method="post" >{% csrf_token %}
-        <input class="p-[5px] rounded-md bg-gray-100" type="text" placeholder="email" name="email">
-        <input class="p-[5px] rounded-md bg-gray-100" type="password" placeholder="password" name="password">
-        <button class="p-[5px] rounded-md bg-gray-600 font-medium text-[18px] text-white " type="submit" >Login</button>
+<div class="mx-auto  max-w-[350px] pt-[175px] ">
+    
+    <form class="flex flex-col gap-[10px] p-[25px] bg-secondary rounded-md " action="" method="post" >{% csrf_token %}
+        <h1 class="text-white font-medium text-[20px] text-center mb-[25px] " >Client Login</h1>
+        <input class="p-[6px] rounded-md bg-gray-100" type="text" placeholder="email" name="email">
+        <input class="p-[6px] rounded-md bg-gray-100" type="password" placeholder="password" name="password">
+        <button class="p-[6px] rounded-md bg-gray-600 font-medium text-[18px] text-white " type="submit" >Login</button>
+        <span  class="pl-10 pt-3 pb-3">Create an account ? <a class = "text-white"href="/reg/client">Sign in</a></span>
     </form>
+    
 </div>
+
 {% endblock %}

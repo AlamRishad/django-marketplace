@@ -1,13 +1,16 @@
 {% extends 'components/base.html' %}
 
 {% block container %}
-        <div class="mx-auto max-w-[300px] pt-[100px] pb-[100px] ">
-            <h1 class="text-primary font-medium text-[20px] text-center mb-[20px] " >Bid</h1>
-            <form class="flex flex-col gap-[5px] p-[20px] bg-secondary rounded-md " action="" method="post" >{% csrf_token %}
-                <input class="p-[5px] rounded-md bg-gray-100" type="text" placeholder="proposed_message" name="proposed_message">
-                <input class="p-[5px] rounded-md bg-gray-100" type="text" placeholder="proposed_amount" name="proposed_amount">
-                <button class="p-[5px] rounded-md bg-gray-600 font-medium text-[18px] text-white " type="submit" >Bid now</button>
+
+        <div class="mx-auto  max-w-[600px] pt-[25px] pb-[50px] ">
+    
+            <form class="flex flex-col gap-[13px] p-[25px] bg-white " action="" method="post" >{% csrf_token %}
+                <h1 class="text-black font-medium text-[23px]  text-center mb-[25px] " >Bid</h1>
+              <div class="flex flex-col"><p>Cover Letter : </p><textarea class="border-[3px] h-[140px] p-[6px] rounded-md bg-gray-100" type="text"   name="proposed_message"></textarea></div>
+              <div class="flex flex-col"><p> Amount : </p><input class="border-[3px] p-[6px] rounded-md bg-gray-100" type="text"  name="proposed_amount"></div>
+                <button class="p-[6px] rounded-md bg-indigo-600 font-medium text-[18px] text-white " type="submit" >Bid now</button>
             </form>
+            
         </div>
 {% endblock %}
 
