@@ -70,7 +70,7 @@ def bid(request, jobId):
 
     print("job: "+jobId)
 
-    return redirect(jobDetails)
+    return render(request, 'public/bid.html')
 
 
 def freelancerRegister(request):
