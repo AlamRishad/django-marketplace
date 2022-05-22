@@ -1,7 +1,7 @@
 {% extends 'components/base.html' %}
 
 {% block container %}
-        <div class=" px-[250px] py-[20px]  " >
+        <!-- <div class=" px-[250px] py-[20px]  " >
             <form action="" method="POST">{% csrf_token %}
 
                 Job Title <input type="text" name="job_title"/><br/>
@@ -10,6 +10,16 @@
                 <br/>
                 <input type="submit" value="Add Job">
                 
+            </form> -->
+        <!-- </div> -->
+        <div class="mx-auto max-w-[300px] pt-[100px] pb-[100px] ">
+            <h1 class="text-primary font-medium text-[20px] text-center mb-[20px] " >Job Create</h1>
+            <form class="flex flex-col gap-[5px] p-[20px] bg-secondary rounded-md " action="" method="post" >{% csrf_token %}
+                <input class="p-[5px] rounded-md bg-gray-100" type="text" placeholder="Title" name="job_title">
+                <input class="p-[5px] rounded-md bg-gray-100" type="text" placeholder="Job desc" name="job_desc">
+                
+                <input class="p-[5px] rounded-md bg-gray-100" type="text" placeholder="Job budget" name="job_budget">
+                <button class="p-[5px] rounded-md bg-gray-600 font-medium text-[18px] text-white " type="submit" >Add Job</button>
             </form>
         </div>
 {% endblock %}

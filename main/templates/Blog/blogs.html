@@ -4,13 +4,15 @@
         {% comment %} Search {% endcomment %}
         {% include 'components/searchBar.html' %}
 
-        
+        <div class=" mx-auto">
+            <div class="bg-green-600 p-2 mt-2 inline-block rounded-md  ">
+                <a href="/blog/create">
+                    <button>Add Blog</button>
+                </a>
+            </div>
 
-        <div class="bg-green-600 p-2 mt-2 inline-block rounded-md  ">
-            <a href="blogCreate/{{user}}">
-                <button>Add Blog</button>
-            </a>
         </div>
+
         <div class=" px-[250px] py-[20px]  " >
             {% for blog in blogList %}
                 <div class=" rounded-2xl bg-gradient-to-r from-slate-100 to-purple-50 px-[20px] py-[20px] mb-[20px] " >

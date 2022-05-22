@@ -193,8 +193,10 @@ def jobCreate(request):
     return render(request, 'client/clientJobCreate.htm')
 
      
-def blogCreate(request,user):
+def blogCreate(request):
     session_name = request.user.username
+    session_email = request.user.email
+
     print(session_name);
     client = Client.objects.all()
     if request.method == 'GET':
@@ -207,7 +209,7 @@ def blogCreate(request,user):
            
             blog_details = Blog.objects.create(blog_title=blog_title ,blog_desc = blog_desc ,blog_writer=session_name );
             blog_details.save()
-            return  redirect(blogDetail)
+            return  redirect(blogs)
 
     return render(request, 'Blog/createBlog.html')
 

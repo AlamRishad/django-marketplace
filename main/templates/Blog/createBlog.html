@@ -1,12 +1,12 @@
 {% extends 'components/base.html' %}
 
 {% block container %}
-<div class="mx-auto max-w-[300px] pt-[300px] ">
-    <h1 class="text-primary font-medium text-[20px] text-center mb-[20px] " >Client Login</h1>
+<div class="mx-auto max-w-[300px] pt-[100px] pb-[100px] ">
+    <h1 class="text-primary font-medium text-[20px] text-center mb-[20px] " >Blog Create</h1>
     <form class="flex flex-col gap-[5px] p-[20px] bg-secondary rounded-md " action="" method="post" >{% csrf_token %}
         <input class="p-[5px] rounded-md bg-gray-100" type="text" placeholder="Title" name="blog_title">
         <input class="p-[5px] rounded-md bg-gray-100" type="text" placeholder="Content" name="blog_desc">
-        <button class="p-[5px] rounded-md bg-gray-600 font-medium text-[18px] text-white " type="submit" >Login</button>
+        <button class="p-[5px] rounded-md bg-gray-600 font-medium text-[18px] text-white " type="submit" >POST</button>
     </form>
 </div>
 {% endblock %}
