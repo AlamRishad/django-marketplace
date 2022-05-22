@@ -8,8 +8,9 @@
             <p class=" text-[18px] text-textSecondary mt-[10px] " >Budget: {{ job.Job_Budget }} BDT</p>
             <h6 class=" text-[14px] text-textSecondary " >{{ job.Job_Date }}</h6>
             <p class=" text-[15px] text-textSecondary mt-[10px] " >{{ job.Job_desc }}</p>
-             
-           
+
+            <p class=" text-[15px] text-textSecondary mt-[10px] " >{{ job.id }}</p>
+
           
             {% if is_Bidden == False and is_freelancer == True%}
 
@@ -33,9 +34,14 @@
                 <div class=" bg-slate-200 p-[5px] rounded-md ">
                     <h6 class="text-[14px] font-medium">Bidded by: {{bid.freelancer_id.name }} </h6>
                     <p class="text-[12px]" >Bid: {{bid.proposed_amount }} </p>
+
                     {% if is_freelancer == False %}
+
+                    <p class="text-[12px]" >ID: {{bid.id }} </p>
+
                     <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
-                       Job Awarded
+                      
+                       <a href="/award/{{job.id}}/{{bid.freelancer_id.id}}/{{bid.id}}">  Award now </a>
                       </button>
                     {% endif %}  
                 </div>
