@@ -1,0 +1,41 @@
+{% extends 'components/base.html' %}
+
+{% block container %}
+        {% comment %} Search {% endcomment %}
+        <div class=" px-[250px] py-[20px]  " >
+            
+                <div class=" rounded-2xl bg-gradient-to-r from-slate-100 to-purple-50 px-[20px] py-[20px] mb-[20px] " >
+                    <h1 class=" text-[20px] font-bold text-textPrimary ">{{ blog.blog_title }}</h1>
+                    <p class=" text-[18px] text-textSecondary mt-[10px] " >{{ blog.blog_writer }}</p>
+                    <h6 class=" text-[16px] text-textSecondary " >{{ blog.blog_date }}</h6>
+                    <p class=" text-[16px]  text-textSecondary mt-[10px] " >{{ blog.blog_desc}}</p>
+                </div>
+                
+
+                <div>
+                    
+                    <form class="flex flex-col gap-[5px] p-[20px] bg-secondary rounded-md " action="" method="POST">{% csrf_token %}
+
+                        <input class="p-[5px] rounded-md bg-gray-100 min-h-[100px]  " type="text" name="comment_desc"/>
+                        <input class="p-[5px] rounded-md bg-gray-600 font-medium text-[18px] text-white " type="submit" value="Comment">
+                          
+                    </form>
+                    <div class="bg-slate-100 p-[5px] mb-[5px]" >
+                        <h6 class=" text-[15px] font-medium ">Total comments: {{commentData.count}}</h6>
+                    </div>
+                    {%  for comment in commentData %}
+                    <div class=" bg-slate-200 p-[5px] mb-[4px] rounded-md ">
+                        <h6 class="text-[14px] font-medium">{{comment.comment_writer }} </h6>
+                        <p class="text-[12px]" >{{comment.comment_desc }} </p>
+                    </div>
+                    {% endfor %}
+                    
+                </div>
+        </div>
+{% endblock %}
+
+
+
+    
+
+    

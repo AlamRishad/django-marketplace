@@ -3,17 +3,12 @@ from queue import Empty
 from tkinter.messagebox import NO
 from django.shortcuts import render , redirect
 from django.http import HttpResponse
-from .models import Job_Detail, Freelancer, Job_Bid, Job_Awarded, Job_Bid, Client , Blog
+from .models import Job_Detail, Freelancer, Job_Bid, Job_Awarded, Job_Bid, Client , Blog ,Blog_Comment
 
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 
-
-
-
-
 def index(request):
-    
     return render(request, 'public/test.html')
 
 def jobsFeed(request):
@@ -22,21 +17,27 @@ def jobsFeed(request):
 
 def jobDetails(request, id):
     jobs = Job_Detail.objects.get(id = id)
+   
     session_email = request.user.email
     freelancer = Freelancer.objects.all()
     biddingData = Job_Bid.objects.filter(job_id_id = id)
-    free_id = None
+    free_id = -1
     for x in freelancer:
         if(session_email== x.email):
-            free_id = x.id;
-            break;
+            free_id = x.id
+            break
 
-    isBidded = Job_Bid.objects.filter(freelancer_id_id = free_id ).all().count() != 0 if True else False
+    is_freelancer=True
+    if(free_id == -1):
+      is_freelancer=False; 
    
-
-    is_freelancer = free_id is not None if True else False
-
-    return render(request, 'public/jobDetails.html', { 'job': jobs, "is_freelancer": is_freelancer, "biddingData": biddingData, "isBidded": isBidded } )
+    is_Bidden=False
+  
+    if(is_freelancer == True):
+       if(Job_Bid.objects.filter(freelancer_id_id = free_id ).filter(job_id_id=jobs).all().count() > 0):
+         is_Bidden=True
+       
+    return render(request, 'public/jobDetails.html', { 'job': jobs, "is_freelancer": is_freelancer, "biddingData": biddingData, "is_Bidden": is_Bidden } )
 
 def bid(request, jobId):
     job = Job_Detail.objects.get(id = jobId)
@@ -191,8 +192,10 @@ def jobCreate(request):
     return render(request, 'client/clientJobCreate.htm')
 
      
-def blogCreate(request,user):
+def blogCreate(request):
     session_name = request.user.username
+    session_email = request.user.email
+
     print(session_name);
     client = Client.objects.all()
     if request.method == 'GET':
@@ -205,12 +208,30 @@ def blogCreate(request,user):
            
             blog_details = Blog.objects.create(blog_title=blog_title ,blog_desc = blog_desc ,blog_writer=session_name );
             blog_details.save()
-            return  redirect(blogDetail)
+            return  redirect(blogs)
 
     return render(request, 'Blog/createBlog.html')
 
-def blogDetail(request):
+def blogs(request):
     blogs = Blog.objects.all()
     session_id = request.user.id
-    return render(request, 'Blog/showBlog.html', { "blogList" : blogs ,"user" : session_id})
+    return render(request, 'Blog/blogs.html', { "blogList" : blogs ,"user" : session_id})
+
+
+def blogDetail(request,blogid):
+    blogs = Blog.objects.get(id = blogid)
+    print(blogs)
+    session_id = request.user.id
+    session_name = request.user.username
+    if request.method == 'POST':
+        print("Comment completed")
+        if request.POST.get('comment_desc'):
+            comment_desc = request.POST.get('comment_desc')
+            comment = Blog_Comment.objects.create(blog_comment_id = blogid, comment_writer=session_name,comment_desc=comment_desc)
+            comment.save()
+            print("Comment completed")
+    
+    commentData = Blog_Comment.objects.filter(blog_comment_id = blogid)     
+    return render(request, 'Blog/blogDetail.html', { "blog" : blogs ,"user" : session_id , "commentData":commentData })
+   
     

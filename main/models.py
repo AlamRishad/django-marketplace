@@ -43,6 +43,12 @@ class Blog(models.Model):
      blog_desc = models.TextField()
      blog_writer=models.CharField(max_length=100)
 
+class Blog_Comment(models.Model):
+     blog_comment = models.ForeignKey(to='Blog', on_delete=models.CASCADE)
+     comment_writer = models.CharField(max_length=100)
+     comment_date=models.DateTimeField(default=timezone.now)
+     comment_desc = models.TextField()
+    
 # class Transaction(models.Model):
 #      Amount = models.FloatField()
 #      Job=models.ForeignKey(to='Job_Detail', on_delete=models.CASCADE)

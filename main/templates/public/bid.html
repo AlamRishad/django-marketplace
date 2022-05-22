@@ -1,13 +1,13 @@
 {% extends 'components/base.html' %}
 
 {% block container %}
-        <div class=" px-[250px] py-[20px]  " >
-            <form action="" method="POST">{% csrf_token %}
-
-                Proposal Message <input type="text" name="proposed_message"/><br/>
-                Proposed Amount <input type="text" name="proposed_amount"/><br/>
-                <br/>
-                <input type="submit" value="Bid">
+        <div class="mx-auto max-w-[300px] pt-[100px] pb-[100px] ">
+            <h1 class="text-primary font-medium text-[20px] text-center mb-[20px] " >Bid</h1>
+            <form class="flex flex-col gap-[5px] p-[20px] bg-secondary rounded-md " action="" method="post" >{% csrf_token %}
+                <input class="p-[5px] rounded-md bg-gray-100" type="text" placeholder="proposed_message" name="proposed_message">
+                <input class="p-[5px] rounded-md bg-gray-100" type="text" placeholder="proposed_amount" name="proposed_amount">
+                <button class="p-[5px] rounded-md bg-gray-600 font-medium text-[18px] text-white " type="submit" >Bid now</button>
             </form>
         </div>
 {% endblock %}
+
