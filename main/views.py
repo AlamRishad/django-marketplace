@@ -17,6 +17,9 @@ def index(request):
     return render(request, 'public/test.html')
 
 def jobsFeed(request):
+    if(request.user.is_authenticated == False):
+        return redirect('freelancerLogin')
+
     jobs = Job_Detail.objects.all()
     return render(request, 'public/jobsFeeds.html', { "jobsList" : jobs })
 
@@ -41,6 +44,8 @@ def jobDetails(request, id):
     return render(request, 'public/jobDetails.html', { 'job': jobs, "is_freelancer": is_freelancer, "biddingData": biddingData, "isBidded": isBidded } )
 
 def bid(request, jobId):
+    if(request.user.is_authenticated == False):
+        return redirect('freelancerLogin')
     job = Job_Detail.objects.get(id = jobId)
 
     session_email = request.user.email
@@ -56,7 +61,7 @@ def bid(request, jobId):
     is_freelancer = free_id is not None if True else False
 
     if not is_freelancer:
-        return render(request, 'freelancer/freelancerLogin.html')    
+        return redirect('freelancerLogin')    
    
     print (free_id);
 
@@ -67,8 +72,7 @@ def bid(request, jobId):
             bid = Job_Bid.objects.create(freelancer_id_id = free_id, proposal_message=proposed_message,proposed_amount=proposed_amount, job_id_id = jobId)
             bid.save()
             print("Bid completed")
-
-    print("job: "+jobId)
+            return redirect("/jobs/"+jobId)
 
     return render(request, 'public/bid.html')
 
@@ -168,6 +172,8 @@ def logoutUser(request):
     return redirect(clientLogin) 
 
 def jobCreate(request):
+    if(request.user.is_authenticated == False):
+        return redirect('clientLogin')
     session_email = request.user.email
     client = Client.objects.all()
 
@@ -194,6 +200,8 @@ def jobCreate(request):
 
      
 def blogCreate(request):
+    if(request.user.is_authenticated == False):
+        return redirect('freelancerLogin')
     session_name = request.user.username
     session_email = request.user.email
 
@@ -234,5 +242,14 @@ def blogDetail(request,blogid):
     
     commentData = Blog_Comment.objects.filter(blog_comment_id = blogid)     
     return render(request, 'Blog/blogDetail.html', { "blog" : blogs ,"user" : session_id , "commentData":commentData })
+
+def award(request, jobId, freelancerId, biddingId):
+    session_id = request.user.id
+
+    award = Job_Awarded(job_id_id = jobId, freelance_id_id = freelancerId, client_id_id = session_id, bidding_id_id = biddingId )
+    award.save()
+
+    return redirect("/jobs/"+jobId)
+
    
     

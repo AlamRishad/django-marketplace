@@ -16,5 +16,6 @@ urlpatterns = [
     path('blog/create', views.blogCreate, name='blogCreate'),
     path('blogs/', views.blogs, name='blogs'),
     path('blogs/<blogid>', views.blogDetail, name='blogDetail'),
+    path('award/<jobId>/<freelancerId>/<biddingId>', views.award, name='award'),
 ]
 
