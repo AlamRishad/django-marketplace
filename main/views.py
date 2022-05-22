@@ -9,38 +9,47 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 
 
-
 def firstpage(request):
     return render(request, 'public/firstpage.html')
 
 def home(request):
+
     return render(request, 'public/test.html')
 
 def jobsFeed(request):
+    if(request.user.is_authenticated == False):
+        return redirect('freelancerLogin')
+
     jobs = Job_Detail.objects.all()
     return render(request, 'public/jobsFeeds.html', { "jobsList" : jobs })
 
 def jobDetails(request, id):
     jobs = Job_Detail.objects.get(id = id)
+   
     session_email = request.user.email
     freelancer = Freelancer.objects.all()
     biddingData = Job_Bid.objects.filter(job_id_id = id)
-    free_id = None
+    free_id = -1
     for x in freelancer:
         if(session_email== x.email):
-            free_id = x.id;
-            break;
+            free_id = x.id
+            break
 
-
-    isBidded = Job_Bid.objects.filter(freelancer_id_id = free_id ).all().count() != 0 if False else True
-    print()
-
-
-    is_freelancer = free_id is not None if True else False
-
-    return render(request, 'public/jobDetails.html', { 'job': jobs, "is_freelancer": is_freelancer, "biddingData": biddingData, "isBidded": isBidded } )
+    is_freelancer=True
+    if(free_id == -1):
+      is_freelancer=False; 
+   
+    is_Bidden=False
+  
+    if(is_freelancer == True):
+       if(Job_Bid.objects.filter(freelancer_id_id = free_id ).filter(job_id_id=jobs).all().count() > 0):
+         is_Bidden=True
+       
+    return render(request, 'public/jobDetails.html', { 'job': jobs, "is_freelancer": is_freelancer, "biddingData": biddingData, "is_Bidden": is_Bidden } )
 
 def bid(request, jobId):
+    if(request.user.is_authenticated == False):
+        return redirect('freelancerLogin')
     job = Job_Detail.objects.get(id = jobId)
 
     session_email = request.user.email
@@ -56,7 +65,7 @@ def bid(request, jobId):
     is_freelancer = free_id is not None if True else False
 
     if not is_freelancer:
-        return render(request, 'freelancer/freelancerLogin.html')    
+        return redirect('freelancerLogin')    
    
     print (free_id);
 
@@ -67,8 +76,7 @@ def bid(request, jobId):
             bid = Job_Bid.objects.create(freelancer_id_id = free_id, proposal_message=proposed_message,proposed_amount=proposed_amount, job_id_id = jobId)
             bid.save()
             print("Bid completed")
-
-    print("job: "+jobId)
+            return redirect("/jobs/"+jobId)
 
     return render(request, 'public/bid.html')
 
@@ -168,6 +176,8 @@ def logoutUser(request):
     return redirect(firstpage) 
 
 def jobCreate(request):
+    if(request.user.is_authenticated == False):
+        return redirect('clientLogin')
     session_email = request.user.email
     client = Client.objects.all()
 
@@ -194,6 +204,8 @@ def jobCreate(request):
 
      
 def blogCreate(request):
+    if(request.user.is_authenticated == False):
+        return redirect('freelancerLogin')
     session_name = request.user.username
     session_email = request.user.email
 
@@ -234,5 +246,14 @@ def blogDetail(request,blogid):
     
     commentData = Blog_Comment.objects.filter(blog_comment_id = blogid)     
     return render(request, 'Blog/blogDetail.html', { "blog" : blogs ,"user" : session_id , "commentData":commentData })
+
+def award(request, jobId, freelancerId, biddingId):
+    session_id = request.user.id
+
+    award = Job_Awarded(job_id_id = jobId, freelance_id_id = freelancerId, client_id_id = session_id, bidding_id_id = biddingId )
+    award.save()
+
+    return redirect("/jobs/"+jobId)
+
    
     
