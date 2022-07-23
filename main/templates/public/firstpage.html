@@ -1,2 +1,11 @@
-<div class=" mr-[35px] text-textSecondary cursor-pointer " ><a href="/login/client/">Login as a Client</a></div>
-<div class=" mr-[35px] text-textSecondary cursor-pointer " ><a href="/login/freelancer/">Login as a Freelancer</a></div>
+{% extends 'components/base_min.html' %}
+
+{% block container %}
+
+<div class="mx-auto  border-4 max-w-[350px] pt-[250px] ">
+    
+    
+<div class=" mr-[40px]  text-white cursor-pointer my-5" ><a class="p-[10px] rounded-md bg-gray-600 font-medium text-[18px] text-white  " href="/login/client/">Login as a Client</a></div>
+<div class=" mr-[30px]  cursor-pointer " ><a class="p-[10px] rounded-md bg-gray-600 font-medium text-[18px] text-white "href="/login/freelancer/">Login as a Freelancer</a></div>
+</div>
+{% endblock %}
