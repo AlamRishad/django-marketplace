@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 
 
+
 def firstpage(request):
     return render(request, 'public/firstpage.html')
 
